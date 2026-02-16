@@ -1,0 +1,20 @@
+1st terminal: 
+Generate a cluster UUID
+KAFKA_CLUSTER_ID="$(bin/kafka-storage.sh random-uuid)"  #1eWRlUYVTW6Y159ha4YlXQ
+
+Format the log directories:
+bin/kafka-storage.sh format -t $KAFKA_CLUSTER_ID -c config/broker.properties
+
+Start the Kafka server
+bin/kafka-server-start.sh config/broker.properties
+
+2nd terminal 
+1. create topic:
+./bin/kafka-topics.sh --create --topic chat-messages --partitions 5 --replication-factor 1 --bootstrap-server localhost:9092
+
+2. Describe topic:
+./bin/kafka-topics.sh --describe --topic chat-messages -bootstrap-server localhost:9092
+
+
+- Verify consumer consume message or not:
+bin/kafka-consumer-groups.sh --bootstrap-server localhost:9092 --describe --group chat-group
